@@ -2,12 +2,15 @@ const express     = require('express')
 const bodyParser  = require('body-parser')
 const morgan      = require('morgan')
 const cors        = require('cors')
+//const cors-anywhere   = require('cors-anywhere')
 const app         = module.exports = express()
 const port        = parseInt(process.env.PORT || 3000)
+const knex        = require('./connection.js')
 
-const data = {id:1, name:"brewery"}
+//const data = {id:1, name:"brewery"}
 
-app.get('/api/v1/breweries', (request, response) => {response.json(data)
+app.get('/api/v1/breweries', (request, response) => {
+  knex("breweries").then(breweries => {response.json(breweries)} )
 })
 
 app.use(bodyParser.json())
